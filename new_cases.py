@@ -93,6 +93,7 @@ def update_chk_mov_ave(value):
     else:
         __plts__.handles.mov_ave.set_visible(False)
 
+
 def update_sel_country(value):
     df = __data__.dfs[value]
     for h, y in zip(__plts__.handles.bar, df['new_cases']):
@@ -100,7 +101,7 @@ def update_sel_country(value):
     set_all_visible_except(value)
     __plts__.ax.set_title(f'New Cases: {value}')
     update_ylim(value)
-    # update_mov_ave(mov_ave.value)
+    update_chk_mov_ave(__widgets__.chk_mov_ave.v_model)
 
 def observe():
     __widgets__.chk_log_scale.observe(lambda x: update_chk_log_scale(x.new), names='v_model')
@@ -111,7 +112,9 @@ def observe():
 def set_default():
     __widgets__.chk_log_scale.v_model = False
     __widgets__.chk_mov_ave.v_model = False
+    update_chk_mov_ave(False)
     __widgets__.sel_country.v_model = __data__.country_large[0]
+    update_sel_country(__widgets__.sel_country.v_model)
     __widgets__.slider_mov_ave.v_model = 5
 
 def init(data, plts):
