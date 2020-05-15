@@ -74,12 +74,21 @@ def update_chk_log_scale(value):
         __plts__.ax.set_yscale('linear')
         set_ylim_bottom()
 
+
+def update_mov_ave(name, n):
+    __plts__.handles.mov_ave.set_ydata(moving_average(__data__.dfs[name]['new_cases'],
+                                                      n))
+
+
 def update_slider_mov_ave(value):
-    df = __data__.dfs[__widgets__.sel_country.v_model]
-    __plts__.handles.mov_ave.set_ydata(moving_average())
+    name = __widgets__.sel_country.v_model
+    update_mov_ave(name, value)
 
 def update_chk_mov_ave(value):
     if value:
+        name = __widgets__.sel_country.v_model
+        n_day = __widgets__.slider_mov_ave.v_model
+        update_mov_ave(name, n_day)
         __plts__.handles.mov_ave.set_visible(True)
     else:
         __plts__.handles.mov_ave.set_visible(False)
