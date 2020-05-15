@@ -68,9 +68,11 @@ def update_ylim(name):
 # callbacks
 def update_chk_log_scale(value):
     if value:
+        set_ylim_bottom()
         __plts__.ax.set_yscale('log')
     else:
         __plts__.ax.set_yscale('linear')
+        set_ylim_bottom()
 
 def update_slider_mov_ave(value):
     df = __data__.dfs[__widgets__.sel_country.v_model]
