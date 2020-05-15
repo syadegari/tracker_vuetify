@@ -61,8 +61,9 @@ def set_ylim_top(name):
     __plts__.ax.set_ylim(top=__data__.dfs[name]['new_cases'].max() * 1.1)
 
 
-def set_ylim(name):
-    pass
+def update_ylim(name):
+    set_ylim_bottom()
+    set_ylim_top(name)
 
 # callbacks
 def update_chk_log_scale(value):
@@ -87,7 +88,7 @@ def update_sel_country(value):
         h.set_height(y)
     set_all_visible_except(value)
     __plts__.ax.set_title(f'New Cases: {value}')
-    # update_ylim(y_lim.value)
+    update_ylim(value)
     # update_mov_ave(mov_ave.value)
 
 def observe():
@@ -112,7 +113,3 @@ def init(data, plts):
     __widgets__ = make_widgets(__data__.country_large)
     set_default()
     observe()
-
-
-
-# callbacks
