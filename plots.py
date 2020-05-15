@@ -30,7 +30,7 @@ def plot_countries(ax, countries, country, dfs, kw, n_mov_ave=5):
 
     df = dfs[country]
     h_bar = ax.bar(df['date'], df[kw])
-    h_ave, = ax.plot(df['date'], moving_average(df[kw], n_mov_ave))
+    h_ave, = ax.plot(df['date'], moving_average(df[kw], n_mov_ave), color='red')
     set_all_visible_except(country, h_plt)
     ax.xaxis.set_major_locator(plt.MaxNLocator(4))
     return h_plt, h_bar, h_ave
