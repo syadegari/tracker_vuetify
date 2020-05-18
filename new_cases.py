@@ -18,7 +18,6 @@ def make_widgets(country_large):
                          'sel_country'])(
         v.Checkbox(v_model='default', label='moving average'),
         v.Slider(min=2, max=10, class_='px-4', v_model='default', thumb_label=True, ticks=True),
-        v.Checkbox(v_model='default', label='log scale'),
         v.RadioGroup(children=[radio_new_cases, radion_new_deaths],
                      row=True,
                      mandatory=False,
