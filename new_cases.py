@@ -14,7 +14,6 @@ def make_widgets(country_large):
     widgets = namedtuple('Widget',
                          ['chk_mov_ave',
                          'slider_mov_ave',
-                         'chk_log_scale',
                          'rad_cases',
                          'sel_country'])(
         v.Checkbox(v_model='default', label='moving average'),
@@ -35,7 +34,6 @@ def draw(output):
             __widgets__.rad_cases,
             __widgets__.chk_mov_ave,
             __widgets__.slider_mov_ave,
-            __widgets__.chk_log_scale,
             output
         ],
         ),
@@ -51,10 +49,8 @@ def set_all_visible_except(value):
 
 
 def set_ylim_bottom():
-    if __widgets__.chk_log_scale.v_model:
-        __plts__.ax.set_ylim(bottom=1.0)
-    else:
-        __plts__.ax.set_ylim(bottom=0.0)
+    _, y_axis = __plts__.fig.axes
+    y_axis.scale.min = 0.0
 
 
 def set_ylim_top(name):
@@ -66,15 +62,6 @@ def update_ylim(name):
     set_ylim_top(name)
 
 # callbacks
-def update_chk_log_scale(value):
-    if value:
-        set_ylim_bottom()
-        __plts__.ax.set_yscale('log')
-    else:
-        __plts__.ax.set_yscale('linear')
-        set_ylim_bottom()
-
-
 def update_mov_ave(name, n):
     __plts__.handles.mov_ave.set_ydata(moving_average(__data__.dfs[name]['new_cases'],
                                                       n))
@@ -104,13 +91,11 @@ def update_sel_country(value):
     update_chk_mov_ave(__widgets__.chk_mov_ave.v_model)
 
 def observe():
-    __widgets__.chk_log_scale.observe(lambda x: update_chk_log_scale(x.new), names='v_model')
     __widgets__.chk_mov_ave.observe(lambda x: update_chk_mov_ave(x.new), names='v_model')
     __widgets__.slider_mov_ave.observe(lambda x: update_slider_mov_ave(x.new), names='v_model')
     __widgets__.sel_country.observe(lambda x: update_sel_country(x.new), names='v_model')
 
 def set_default():
-    __widgets__.chk_log_scale.v_model = False
     __widgets__.chk_mov_ave.v_model = False
     update_chk_mov_ave(False)
     __widgets__.sel_country.v_model = __data__.country_large[0]
