@@ -86,7 +86,6 @@ def update_sel_country(value):
     df = __data__.dfs[value]
     __plts__.handles.bar.y = df['new_cases']
     set_all_visible_except(value)
-    __plts__.ax.set_title(f'New Cases: {value}')
     update_ylim(value)
     update_chk_mov_ave(__widgets__.chk_mov_ave.v_model)
 
