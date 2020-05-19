@@ -15,23 +15,32 @@ def make_widgets(country_large):
     widgets = namedtuple('Widget',
                          ['chk_mov_ave',
                          'slider_mov_ave',
-                         'sel_country'])(
+                         'sel_country',
+                          'tab1',
+                          'tab2'])(
         v.Checkbox(v_model='default', label='moving average'),
         v.Slider(min=2, max=10, class_='px-4', v_model='default', thumb_label=True, ticks=True),
-        v.Select(items=country_large, v_model='default')
+        v.Select(items=country_large, v_model='default'),
+        tab1,
+        tab2
     )
     return widgets
 
 
 def draw():
+    import numpy as np
+    fig2 = plt.figure()
+    plt.plot(np.arange(100), np.random.rand(100))
     return v.Layout(children=[
         v.Flex(children=[
             __widgets__.sel_country,
             __widgets__.chk_mov_ave,
             __widgets__.slider_mov_ave,
-            __plts__.fig
-        ],
-        )
+            v.Tabs(children=[__widgets__.tab1,
+                             __widgets__.tab2,
+                             v.TabItem(children=[__plts__.fig]),
+                             v.TabItem(children=[fig2])])
+        ])
     ])
 
 
