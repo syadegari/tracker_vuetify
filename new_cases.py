@@ -43,9 +43,10 @@ def draw():
 
 # helpers
 def set_all_visible_except(value):
-    for _, h in __plts__.handles.plts.items():
-        h.visible = True
-    __plts__.handles.plts[value].visible = False
+    if __plts__.handles.plts:
+        for _, h in __plts__.handles.plts.items():
+            h.visible = True
+        __plts__.handles.plts[value].visible = False
 
 
 def set_ylim_bottom():

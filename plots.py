@@ -20,9 +20,10 @@ def set_ylim_top(name):
 
 
 def set_all_visible_except(name, h_plt):
-    for _, v in h_plt.items():
-        v.visible = True
-    h_plt[name].visible = False
+    if h_plt:
+        for _, v in h_plt.items():
+            v.visible = True
+        h_plt[name].visible = False
 
 
 def get_xaxis():
@@ -34,9 +35,9 @@ def get_xaxis():
 def plot_countries(countries, country, dfs, kw, n_mov_ave=5):
     xax = get_xaxis()
     h_plt = {}
-    for country in countries:
-        df = dfs[country]
-        h_plt[country] = plt.plot(x=xax, y=df[kw])
+    # for country in countries:
+    #     df = dfs[country]
+    #     h_plt[country] = plt.plot(x=xax, y=df[kw])
 
     df = dfs[country]
     h_bar = plt.bar(x=xax, y=df[kw])
