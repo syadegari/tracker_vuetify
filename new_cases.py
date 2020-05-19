@@ -1,6 +1,7 @@
 from collections import namedtuple
 import ipyvuetify as v
 import ipywidgets as w
+import bqplot.pyplot as plt
 from helpers import moving_average
 
 __plts__ = [None]
@@ -33,7 +34,7 @@ def draw(output):
             __widgets__.rad_cases,
             __widgets__.chk_mov_ave,
             __widgets__.slider_mov_ave,
-            output
+            __plts__.fig
         ],
         ),
         # v.Flex(xs12=True, xl4=True, children=[output])
@@ -43,8 +44,8 @@ def draw(output):
 # helpers
 def set_all_visible_except(value):
     for _, h in __plts__.handles.plts.items():
-        h.set_visible(True)
-    __plts__.handles.plts[value].set_visible(False)
+        h.visible = True
+    __plts__.handles.plts[value].visible = False
 
 
 def set_ylim_bottom():
@@ -53,7 +54,9 @@ def set_ylim_bottom():
 
 
 def set_ylim_top(name):
-    __plts__.ax.set_ylim(top=__data__.dfs[name]['new_cases'].max() * 1.1)
+    _, y_axis = __plts__.fig.axes
+    y_axis.scale.max = __data__.dfs[name]['new_cases'].max() * 1.1
+
 
 
 def update_ylim(name):
@@ -62,8 +65,7 @@ def update_ylim(name):
 
 # callbacks
 def update_mov_ave(name, n):
-    __plts__.handles.mov_ave.set_ydata(moving_average(__data__.dfs[name]['new_cases'],
-                                                      n))
+    __plts__.handles.mov_ave.y = moving_average(__data__.dfs[name]['new_cases'], n)
 
 
 def update_slider_mov_ave(value):
@@ -75,15 +77,14 @@ def update_chk_mov_ave(value):
         name = __widgets__.sel_country.v_model
         n_day = __widgets__.slider_mov_ave.v_model
         update_mov_ave(name, n_day)
-        __plts__.handles.mov_ave.set_visible(True)
+        __plts__.handles.mov_ave.visible = True
     else:
-        __plts__.handles.mov_ave.set_visible(False)
+        __plts__.handles.mov_ave.visible = False
 
 
 def update_sel_country(value):
     df = __data__.dfs[value]
-    for h, y in zip(__plts__.handles.bar, df['new_cases']):
-        h.set_height(y)
+    __plts__.handles.bar.y = df['new_cases']
     set_all_visible_except(value)
     __plts__.ax.set_title(f'New Cases: {value}')
     update_ylim(value)
