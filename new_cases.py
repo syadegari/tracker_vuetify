@@ -10,12 +10,12 @@ __widgets__ = [None]
 #
 def make_widgets(country_large):
 
-    radio_new_cases = v.Radio(label='case')
-    radion_new_deaths = v.Radio(label='death')
+    radio_new_cases = v.Radio(label='Cases')
+    radion_new_deaths = v.Radio(label='Mortality')
     widgets = namedtuple('Widget',
                          ['chk_mov_ave',
                          'slider_mov_ave',
-                         'rad_cases',
+                          'rad_cases',
                          'sel_country'])(
         v.Checkbox(v_model='default', label='moving average'),
         v.Slider(min=2, max=10, class_='px-4', v_model='default', thumb_label=True, ticks=True),
