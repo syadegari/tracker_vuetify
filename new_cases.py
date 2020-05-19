@@ -10,19 +10,14 @@ __widgets__ = [None]
 #
 def make_widgets(country_large):
 
-    radio_new_cases = v.Radio(label='Cases')
-    radion_new_deaths = v.Radio(label='Mortality')
+    tab1 = v.Tab(children=['Tab1'], v_model='default')
+    tab2 = v.Tab(children=['Tab2'], v_model='default')
     widgets = namedtuple('Widget',
                          ['chk_mov_ave',
                          'slider_mov_ave',
-                          'rad_cases',
                          'sel_country'])(
         v.Checkbox(v_model='default', label='moving average'),
         v.Slider(min=2, max=10, class_='px-4', v_model='default', thumb_label=True, ticks=True),
-        v.RadioGroup(children=[radio_new_cases, radion_new_deaths],
-                     row=True,
-                     mandatory=False,
-                     v_model='ex2'),
         v.Select(items=country_large, v_model='default')
     )
     return widgets
@@ -32,7 +27,6 @@ def draw():
     return v.Layout(children=[
         v.Flex(children=[
             __widgets__.sel_country,
-            __widgets__.rad_cases,
             __widgets__.chk_mov_ave,
             __widgets__.slider_mov_ave,
             __plts__.fig
