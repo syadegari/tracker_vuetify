@@ -19,13 +19,6 @@ def set_ylim_top(name):
     ax.set_ylim(top=dfs[name]['new_cases'].max() * 1.1)
 
 
-def set_all_visible_except(name, h_plt):
-    if h_plt:
-        for _, v in h_plt.items():
-            v.visible = True
-        h_plt[name].visible = False
-
-
 def get_xaxis():
 
     name = list(__data__.dfs.keys())[0]
@@ -34,16 +27,11 @@ def get_xaxis():
 
 def plot_countries(countries, country, dfs, kw, n_mov_ave=5):
     xax = get_xaxis()
-    h_plt = {}
-    # for country in countries:
-    #     df = dfs[country]
-    #     h_plt[country] = plt.plot(x=xax, y=df[kw])
 
     df = dfs[country]
     h_bar = plt.bar(x=xax, y=df[kw])
     h_ave = plt.plot(x=xax, y=moving_average(df[kw], n_mov_ave))
-    set_all_visible_except(country, h_plt)
-    return h_plt, h_bar, h_ave
+    return h_bar, h_ave
 
 plot_countries_new_cases = partial(plot_countries, kw='new_cases')
 plot_countries_new_deaths = partial(plot_countries, kw='new_deaths')

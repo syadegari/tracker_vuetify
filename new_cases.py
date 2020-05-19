@@ -45,13 +45,6 @@ def draw():
 
 
 # helpers
-def set_all_visible_except(value):
-    if __plts__.handles.plts:
-        for _, h in __plts__.handles.plts.items():
-            h.visible = True
-        __plts__.handles.plts[value].visible = False
-
-
 def set_ylim_bottom():
     _, y_axis = __plts__.fig.axes
     y_axis.scale.min = 0.0
@@ -89,7 +82,6 @@ def update_chk_mov_ave(value):
 def update_sel_country(value):
     df = __data__.dfs[value]
     __plts__.handles.bar.y = df['new_cases']
-    set_all_visible_except(value)
     update_ylim(value)
     update_chk_mov_ave(__widgets__.chk_mov_ave.v_model)
 
