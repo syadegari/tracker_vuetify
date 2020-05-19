@@ -65,16 +65,3 @@ class Handles:
                                                            dfs,
                                                            kw,
                                                            n_mov_ave)
-
-class Plots:
-    def __init__(self, ax, countries, country, dfs, n_mov, toggle):
-        self.new_cases = plot_countries_new_cases(ax, countries, country, dfs, n_mov)
-        self.deaths = plot_countries_new_deaths(ax, countries, country, dfs, n_mov)
-        self.toggle = toggle
-
-    def toggle(self):
-        self.toggle = (1 + self.toggle) % 2
-
-    def toggle_visibility(self):
-        pass
-
