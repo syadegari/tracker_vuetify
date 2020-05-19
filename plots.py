@@ -1,8 +1,10 @@
-import matplotlib.pyplot as plt
+from bqplot import pyplot as plt
+import pandas as pd
 from helpers import moving_average
 from functools import partial
 import ipywidgets
 from collections import namedtuple
+
 
 __data__ = [None]
 
@@ -19,47 +21,53 @@ def set_ylim_top(name):
 
 def set_all_visible_except(name, h_plt):
     for _, v in h_plt.items():
-        v.set_visible(True)
-    h_plt[name].set_visible(False)
+        v.visible = True
+    h_plt[name].visible = False
 
-def plot_countries(ax, countries, country, dfs, kw, n_mov_ave=5):
+
+def get_xaxis():
+
+    name = list(__data__.dfs.keys())[0]
+    df = __data__.dfs[name]
+    return pd.date_range(start=df['date'].values[0], periods=len(df))
+
+def plot_countries(countries, country, dfs, kw, n_mov_ave=5):
+    xax = get_xaxis()
     h_plt = {}
     for country in countries:
         df = dfs[country]
-        h_plt[country], = ax.plot(df['date'], df[kw], 'b', lw=.2)
+        h_plt[country] = plt.plot(x=xax, y=df[kw])
 
     df = dfs[country]
-    h_bar = ax.bar(df['date'], df[kw])
-    h_ave, = ax.plot(df['date'], moving_average(df[kw], n_mov_ave), color='red')
+    h_bar = plt.bar(x=xax, y=df[kw])
+    h_ave = plt.plot(x=xax, y=moving_average(df[kw], n_mov_ave))
     set_all_visible_except(country, h_plt)
-    ax.xaxis.set_major_locator(plt.MaxNLocator(4))
     return h_plt, h_bar, h_ave
 
 plot_countries_new_cases = partial(plot_countries, kw='new_cases')
 plot_countries_new_deaths = partial(plot_countries, kw='new_deaths')
 
-
+# TODO: Turn the init into a class
 def init(data):
     global __data__
     __data__ = data
     output = ipywidgets.Output()
 
     with output:
-        fig, ax = plt.subplots()
+        fig = plt.figure()
 
-    fig.canvas.toolbar_position = 'bottom'
-    fig.tight_layout()
+    # fig.canvas.toolbar_position = 'bottom'
+    # fig.tight_layout()
 
-    return namedtuple('Plot', ['output', 'fig', 'ax', 'handles'])(
+    return namedtuple('Plot', ['output', 'fig', 'handles'])(
         output,
         fig,
-        ax,
-        Handles(ax, __data__.country_large, 'US', __data__.dfs, 5, 'new_cases')
+        Handles(__data__.country_large, 'US', __data__.dfs, 5, 'new_cases')
     )
 
 class Handles:
-    def __init__(self, ax, countries, country, dfs, n_mov_ave, kw):
-        self.plts, self.bar, self.mov_ave = plot_countries(ax,
+    def __init__(self, countries, country, dfs, n_mov_ave, kw):
+        self.plts, self.bar, self.mov_ave = plot_countries(
                                                            countries,
                                                            country,
                                                            dfs,
