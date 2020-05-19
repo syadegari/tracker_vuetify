@@ -51,16 +51,10 @@ plot_countries_new_deaths = partial(plot_countries, kw='new_deaths')
 def init(data):
     global __data__
     __data__ = data
-    output = ipywidgets.Output()
 
-    with output:
-        fig = plt.figure()
+    fig = plt.figure()
 
-    # fig.canvas.toolbar_position = 'bottom'
-    # fig.tight_layout()
-
-    return namedtuple('Plot', ['output', 'fig', 'handles'])(
-        output,
+    return namedtuple('Plot', ['fig', 'handles'])(
         fig,
         Handles(__data__.country_large, 'US', __data__.dfs, 5, 'new_cases')
     )

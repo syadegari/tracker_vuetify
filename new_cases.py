@@ -27,7 +27,8 @@ def make_widgets(country_large):
     )
     return widgets
 
-def draw(output):
+
+def draw():
     return v.Layout(children=[
         v.Flex(children=[
             __widgets__.sel_country,
@@ -36,8 +37,7 @@ def draw(output):
             __widgets__.slider_mov_ave,
             __plts__.fig
         ],
-        ),
-        # v.Flex(xs12=True, xl4=True, children=[output])
+        )
     ])
 
 
