@@ -48,11 +48,12 @@ def init(data):
         Handles(__data__.country_large, 'US', __data__.dfs, 5, 'new_cases')
     )
 
+
 class Handles:
     def __init__(self, countries, country, dfs, n_mov_ave, kw):
-        self.plts, self.bar, self.mov_ave = plot_countries(
-                                                           countries,
-                                                           country,
-                                                           dfs,
-                                                           kw,
-                                                           n_mov_ave)
+        self.bar, self.mov_ave = plot_countries(
+            countries,
+            country,
+            dfs,
+            kw,
+            n_mov_ave)
