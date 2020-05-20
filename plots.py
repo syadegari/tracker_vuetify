@@ -35,12 +35,23 @@ def total_numbers(countries, country, dfs, kw, **kwargs):
 def init(data):
     global __data__
     __data__ = data
-
-    fig = plt.figure()
-
-    return namedtuple('Plot', ['fig', 'handles'])(
-        fig,
-        Handles(__data__.country_large, 'US', __data__.dfs, 5, 'new_cases')
+    #
+    fig1 = plt.figure()
+    plt1 = namedtuple('plot', ['fig', 'handles'])(
+        fig1,
+        namedtuple('Handles', ['bar', 'mov_ave'])(
+            *new_cases(__data__.country_large, 'US', __data__.dfs,'new_cases', 5)
+        )
+    )
+    #
+    fig2 = plt.figure()
+    plt2 = namedtuple('plot', ['fig', 'handles'])(
+        fig2,
+        namedtuple('Handles', ['confirmed', 'recovered', 'deaths'])(
+            total_numbers(__data__.country_large, 'US', __data__.dfs, 'confirmed', colors=['red']),
+            total_numbers(__data__.country_large, 'US', __data__.dfs, 'recovered', colors=['green']),
+            total_numbers(__data__.country_large, 'US', __data__.dfs, 'deaths', colors=['black'])
+        )
     )
 
 
@@ -52,3 +63,4 @@ class Handles:
             dfs,
             kw,
             n_mov_ave)
+    return namedtuple('figs', ['fig1', 'fig2'])(plt1, plt2)
