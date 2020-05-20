@@ -24,6 +24,12 @@ def plot_countries(countries, country, dfs, kw, n_mov_ave=5):
     return h_bar, h_ave
 
 
+def total_numbers(countries, country, dfs, kw, **kwargs):
+    xax = get_xaxis()
+    df = dfs[country]
+    return plt.bar(x=xax, y=df[kw], **kwargs)
+
+
 # TODO: Turn the init into a class
 def init(data):
     global __data__
