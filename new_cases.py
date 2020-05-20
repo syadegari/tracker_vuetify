@@ -28,9 +28,6 @@ def make_widgets(country_large):
 
 
 def draw():
-    import numpy as np
-    fig2 = plt.figure()
-    plt.plot(np.arange(100), np.random.rand(100))
     return v.Layout(children=[
         v.Flex(children=[
             __widgets__.sel_country,
