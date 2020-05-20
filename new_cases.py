@@ -111,6 +111,10 @@ def init(data, plts):
     global __widgets__
     #
     __plts__ = plts
+    #
+    xax, yax = __plts__.fig2.fig.axes
+    yax.side = 'right'
+    #
     __data__ = data
     __widgets__ = make_widgets(__data__.country_large)
     set_default()
