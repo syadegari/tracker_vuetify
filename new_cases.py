@@ -10,8 +10,8 @@ __widgets__ = [None]
 #
 def make_widgets(country_large):
 
-    tab1 = v.Tab(children=['Tab1'], v_model='default')
-    tab2 = v.Tab(children=['Tab2'], v_model='default')
+    tab1 = v.Tab(children=['New'], v_model='default')
+    tab2 = v.Tab(children=['Total'], v_model='default')
     widgets = namedtuple('Widget',
                          ['chk_mov_ave',
                          'slider_mov_ave',
