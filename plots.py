@@ -21,7 +21,7 @@ def new_cases(countries, country, dfs, kw, n_mov_ave=5):
 
     df = dfs[country]
     h_bar = plt.bar(x=xax, y=df[kw])
-    h_ave = plt.plot(x=xax, y=moving_average(df[kw], n_mov_ave))
+    h_ave = plt.plot(xax, moving_average(df[kw], n_mov_ave), 'green')
     return h_bar, h_ave
 
 
