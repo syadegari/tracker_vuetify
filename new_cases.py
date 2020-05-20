@@ -38,21 +38,27 @@ def draw():
             __widgets__.slider_mov_ave,
             v.Tabs(children=[__widgets__.tab1,
                              __widgets__.tab2,
-                             v.TabItem(children=[__plts__.fig]),
-                             v.TabItem(children=[fig2])])
+                             v.TabItem(children=[__plts__.fig1.fig]),
+                             v.TabItem(children=[__plts__.fig2.fig])])
         ])
     ])
 
 
 # helpers
 def set_ylim_bottom():
-    _, y_axis = __plts__.fig.axes
+    _, y_axis = __plts__.fig1.fig.axes
+    y_axis.scale.min = 0.0
+    #
+    _, y_axis = __plts__.fig2.fig.axes
     y_axis.scale.min = 0.0
 
 
 def set_ylim_top(name):
-    _, y_axis = __plts__.fig.axes
+    _, y_axis = __plts__.fig1.fig.axes
     y_axis.scale.max = __data__.dfs[name]['new_cases'].max() * 1.1
+    #
+    _, y_axis = __plts__.fig2.fig.axes
+    y_axis.scale.max = __data__.dfs[name]['confirmed'].max() * 1.1
 
 
 
@@ -62,7 +68,7 @@ def update_ylim(name):
 
 # callbacks
 def update_mov_ave(name, n):
-    __plts__.handles.mov_ave.y = moving_average(__data__.dfs[name]['new_cases'], n)
+    __plts__.fig1.handles.mov_ave.y = moving_average(__data__.dfs[name]['new_cases'], n)
 
 
 def update_slider_mov_ave(value):
@@ -74,15 +80,20 @@ def update_chk_mov_ave(value):
         name = __widgets__.sel_country.v_model
         n_day = __widgets__.slider_mov_ave.v_model
         update_mov_ave(name, n_day)
-        __plts__.handles.mov_ave.visible = True
+        __plts__.fig1.handles.mov_ave.visible = True
     else:
-        __plts__.handles.mov_ave.visible = False
+        __plts__.fig1.handles.mov_ave.visible = False
 
 
 def update_sel_country(value):
     df = __data__.dfs[value]
-    __plts__.handles.bar.y = df['new_cases']
+    __plts__.fig1.handles.bar.y = df['new_cases']
     update_ylim(value)
+    #
+    __plts__.fig2.handles.confirmed.y = df['confirmed']
+    __plts__.fig2.handles.recovered.y = df['recovered']
+    __plts__.fig2.handles.deaths.y = df['deaths']
+    #
     update_chk_mov_ave(__widgets__.chk_mov_ave.v_model)
 
 def observe():
