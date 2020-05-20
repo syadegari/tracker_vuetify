@@ -8,16 +8,6 @@ from collections import namedtuple
 
 __data__ = [None]
 
-def set_ylim_bottom():
-    if log_scale.value:
-        ax.set_ylim(bottom=1.0)
-    else:
-        ax.set_ylim(bottom=0.0)
-
-
-def set_ylim_top(name):
-    ax.set_ylim(top=dfs[name]['new_cases'].max() * 1.1)
-
 
 def get_xaxis():
 
@@ -33,8 +23,6 @@ def plot_countries(countries, country, dfs, kw, n_mov_ave=5):
     h_ave = plt.plot(x=xax, y=moving_average(df[kw], n_mov_ave))
     return h_bar, h_ave
 
-plot_countries_new_cases = partial(plot_countries, kw='new_cases')
-plot_countries_new_deaths = partial(plot_countries, kw='new_deaths')
 
 # TODO: Turn the init into a class
 def init(data):
