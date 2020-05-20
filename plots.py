@@ -54,13 +54,4 @@ def init(data):
         )
     )
 
-
-class Handles:
-    def __init__(self, countries, country, dfs, n_mov_ave, kw):
-        self.bar, self.mov_ave = plot_countries(
-            countries,
-            country,
-            dfs,
-            kw,
-            n_mov_ave)
     return namedtuple('figs', ['fig1', 'fig2'])(plt1, plt2)
