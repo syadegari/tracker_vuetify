@@ -15,7 +15,8 @@ def get_xaxis():
     df = __data__.dfs[name]
     return pd.date_range(start=df['date'].values[0], periods=len(df))
 
-def plot_countries(countries, country, dfs, kw, n_mov_ave=5):
+
+def new_cases(countries, country, dfs, kw, n_mov_ave=5):
     xax = get_xaxis()
 
     df = dfs[country]
